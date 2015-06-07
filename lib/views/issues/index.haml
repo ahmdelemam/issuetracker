@@ -1,0 +1,32 @@
+%h1 All Issues
+
+%table.table.table-hover
+  %thead
+  %tr
+    %th Title
+    %th Description
+    %th Status
+    %th Created at
+    
+  -@issues.each do |issue|
+    %tr
+      %td
+        %a(href="/issues/#{issue.id}/edit")=issue.name
+      %td=issue.description
+      %td=issue.status
+      %td=issue.id.generation_time
+
+  -unless @issues.any?
+    %tfoot
+      %tr
+        %th
+          There is no issues.
+        %th
+          %a.btn.btn-primary(href="issues/new") Create Issue
+        %th
+
+.text-center
+  %ul.pagination
+    -(1..@pagination.last_page).each do |page|
+      %li{class: [@pagination.current_page + 1 == page ? "active" : ""]}
+        %a{href: "?page=#{page}"}=page
